@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>1 to 50</title>
+  <link rel="stylesheet" href="./style/style.css">
+</head>
+
+<body>
+  <div class="container" id="gameBoard">
+    
+  </div>
+  <script>
+    function generateUniqueNumbers(start, end) {
+      let numbers = [];
+      while (numbers.length < 25) {
+        const randomNumber = Math.floor(Math.random() * (end - start + 1)) + start;
+        if (!numbers.includes(randomNumber)) {
+          numbers.push(randomNumber);
+        }
+      }
+      return numbers;
+    }
+
+    let contador = 1;
+    const gameBoard = document.getElementById('gameBoard');
+    const initialNumbers = generateUniqueNumbers(1, 25);
+    let numbers2 = [];
+
+    for (let i = 0; i < 25; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.textContent = initialNumbers[i];
+      cell.setAttribute('data-number', initialNumbers[i]);
+      gameBoard.appendChild(cell);
+
+      cell.addEventListener('click', () => {
+        const clickedNumber = parseInt(cell.getAttribute('data-number'), 10);
+
+        if (clickedNumber === contador) {
+          if (numbers2.length !== 25) {
+            while (numbers2.length !== 25) {
+              const nextNumber = Math.floor(Math.random() * (50 - 26 + 1)) + 26;
+
+              if (!numbers2.includes(nextNumber)) {
+                cell.textContent = nextNumber;
+                cell.setAttribute('data-number', nextNumber);
+                cell.style.backgroundColor = '';
+                numbers2.push(nextNumber);
+                break;
+              }
+            }
+          } else {
+            cell.parentNode.removeChild(cell);
+            
+          }
+
+          contador++;
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
